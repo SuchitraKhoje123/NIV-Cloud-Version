@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Configure Node</title>
+</head>
+<body>
+  <div class="container">
+    <h2>Node Settings</h2>
+    <input id="uname" class="inp" type="text" placeholder="Enter Username">
+    <input id="uid" class="inp" type="text" placeholder="Enter UID">
+    <h2>WiFi Settings</h2>
+    <input id="ssid" class="inp" type="text" placeholder="Enter SSID">
+    <input id="pass" class="inp" type="text" placeholder="Enter PASS">
+    <input class="inp" type="button" onclick="saveDat()">
+  </div>
+  <script>
+    const HOST = window.location.host;
+
+    let uname = document.querySelector('#uname');
+    let uid = document.querySelector('#uid');
+    let ssid = document.querySelector('#ssid');
+    let pass = document.querySelector('#pass');
+    
+    async function savDat() {
+      const url = new URL('http://' + HOST + '/save');
+      url.search = new URLSearchParams({
+        uname: uname.value,
+        uid: uid.value,
+        ssid: ssid.value,
+        pass: pass.value
+      });
+      console.log(url.toString());
+      let resp = await fetch(url.toString());
+      let data = await resp.json();
+      alert(data.msg);
+    }
+  </script>
+</body>
+</html>
